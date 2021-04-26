@@ -21,6 +21,8 @@ import com.tweetapp.service.MainService;
 @RequestMapping(path = "/api/v1.0/tweets")
 public class MainController {
 	
+	private static final Logger LOGGER =LoggerFactory.getLogger(MainController.class);
+	
 
 	
 	@Autowired
@@ -30,6 +32,7 @@ public class MainController {
 	
 	@PostMapping(path= "/register")
 	public ResponseEntity<Response> regsiterNewUser(@RequestBody RegisterForm registerForm) {
+		LOGGER.info("POST Request - Registering New User");
 		ResponseEntity<Response> response =  this.mainService.registerNewUser(registerForm);
 		return response;
 	}
@@ -38,6 +41,7 @@ public class MainController {
 	
 	@PostMapping(path= "/login")
 	public ResponseEntity<Response> loginUser(@RequestBody LoginForm loginForm) {
+		LOGGER.info("POST Request - Logging in User :{}",loginForm.getUserId());
 		ResponseEntity<Response> response = this.mainService.loginUser(loginForm);
 		return response;
 	}
@@ -45,6 +49,7 @@ public class MainController {
 //	GET /api/v1.0/tweets/<username>/forgot Forgot password
 	@PostMapping(path= "/{username}/forgot")
 	public  ResponseEntity<Response> forgotPassword(@PathVariable String username,@RequestBody LoginForm forgotForm) {
+		LOGGER.info("POST Request - Resetting Password for User : {}", username);
 		ResponseEntity<Response> response = this.mainService.resetUser(forgotForm);
 		return response;
 	}

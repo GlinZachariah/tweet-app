@@ -38,6 +38,7 @@ public class UserController {
 //	GET /api/v1.0/tweets/all Get all tweets
 	@GetMapping(path = "/all")
 	public ResponseEntity<Response> getAllTweets() {
+		LOGGER.info("GET Request - Getting all the tweets");
 		return userService.getAllTweets();
 	}
 	
@@ -51,42 +52,49 @@ public class UserController {
 //	GET /api/v/1.0/tweets/user/search/username* Search by username
 	@GetMapping(path = "/user/search/{userId}")
 	public ResponseEntity<Response> getUserByUserId(@PathVariable String userId) {
+		LOGGER.info("GET Request - Getting user details for User :{}",userId);
 		return userService.getUserByUserId(userId);
 	}
 
 //	GET /api/v1.0/tweets/username Get all tweets of user
 	@GetMapping(path = "/{userId}")
 	public ResponseEntity<Response> getTweetsByUserName(@PathVariable String userId) {
+		LOGGER.info("GET Request - Getting tweets for User: {}",userId);
 		return userService.getTweetsForUser(userId);
 	}
 
 //	POST /api/v1.0/tweets/<username>/add Post new tweet
 	@PostMapping(path = "/{userId}/add")
 	public ResponseEntity<Response> addNewPostByUserName(@PathVariable String userId,@RequestBody Tweet tweet) {
+		LOGGER.info("POST Request - Add New Tweet for User: {}",userId);
 		return userService.addNewTweet(userId,tweet);
 	}
 
 //	PUT /api/v1.0/tweets/<username>/update/<id> Update tweet
 	@PutMapping(path = "/{userId}/update/{id}")
 	public ResponseEntity<Response> updateOldTweet(@PathVariable String userId,@PathVariable Long id,@RequestBody Tweet tweet) {
+		LOGGER.info("PUT Request - Updating tweet with id : {} by User : {} ", id, userId);
 		return userService.updateTweet(userId,id,tweet);
 	}
 
 //	DELETE /api/v1.0/tweets/<username>/delete/<id> Delete tweet
 	@DeleteMapping(path = "/{userId}/delete/{id}")
 	public ResponseEntity<Response> deletePostByUserName(@PathVariable String userId,@PathVariable Long id) {
+		LOGGER.info("DELETE Request - Deleting tweet with id :{} by User: {}", id, userId);
 		return userService.deleteTweet(userId,id);
 	}
 
 //	PUT /api/v1.0/tweets/<username>/like/<id> Like tweet
 	@PutMapping(path = "/{userId}/like/{id}")
 	public ResponseEntity<Response> likePostByUserName(@PathVariable String userId,@PathVariable Long id) {
+		LOGGER.info("PUT Request - Liking tweet with id : {} by User : {} ", id, userId);
 		return userService.likePostByUserId(userId,id);
 	}
 
 //	POST /api/v1.0/tweets/<username>/reply/<id> Reply to tweet
 	@PutMapping(path = "/{userId}/reply/{id}")
 	public ResponseEntity<Response> replyPostByUserName(@PathVariable String userId,@PathVariable Long id,@RequestBody Reply reply) {
+		LOGGER.info("PUT Request - Replying to tweet with id : {} by User : {} ", id, userId);
 		return userService.replyTweetByUserId(userId,id,reply);
 	}
 }

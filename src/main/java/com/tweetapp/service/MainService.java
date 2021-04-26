@@ -51,6 +51,7 @@ public class MainService {
 			newUser.setPassword(registerForm.getPassword());
 			this.userRepo.save(newUser);
 			this.userCount.save(userCnt);
+			LOGGER.info("New user created with id :{} by username : {}", id, userId);
 		}catch(Exception e) {
 			LOGGER.error("Error while fetching data :{}",e);
 			Response response = new Response(417L);
@@ -62,17 +63,19 @@ public class MainService {
 
 	public ResponseEntity<Response> loginUser(LoginForm loginForm) {
 		boolean userExists = userRepo.existsById(loginForm.getUserId());
-		if (!userExists) {
-			Response response = new Response(409L);
-			return new ResponseEntity<>(response,HttpStatus.OK);
-		}else {
+		if (userExists) {
 			UserEntity user =userRepo.findById(loginForm.getUserId()).get();
 			if(user.getPassword().equals(loginForm.getPassword())) {
 				Response response = new Response(200L);
 				return new ResponseEntity<>(response,HttpStatus.OK);
+			}else {
+				Response response = new Response(409L);
+				LOGGER.error("Invalid password: {}", loginForm.getUserId());
+				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
 		}
-		Response response = new Response(409L);
+		Response response = new Response(400L);
+		LOGGER.error("Invalid user : {}", loginForm.getUserId());
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
@@ -90,6 +93,7 @@ public class MainService {
 			}
 		}
 		Response response = new Response(200L);
+		LOGGER.info("Reset Password completed for User : {}", forgotForm.getUserId());
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
