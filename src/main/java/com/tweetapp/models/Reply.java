@@ -1,4 +1,4 @@
-package com.glinzac.tweetapp.models;
+package com.tweetapp.models;
 
 
 

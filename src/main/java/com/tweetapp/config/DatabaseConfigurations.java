@@ -1,4 +1,4 @@
-package com.glinzac.tweetapp.config;
+package com.tweetapp.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.glinzac.tweetapp.repository")
+@EnableMongoRepositories(basePackages = "com.tweetapp.repository")
 public class DatabaseConfigurations extends AbstractMongoClientConfiguration {
 	
 	@Value("${spring.data.mongodb.uri}")

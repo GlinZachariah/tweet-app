@@ -1,4 +1,4 @@
-package com.glinzac.tweetapp.models;
+package com.tweetapp.models;
 
 
 import java.util.List;
@@ -9,8 +9,8 @@ public class Tweet {
 	private String tweetMessage;
 	private String timeStamp;
 	private long likeCounter;
+	private List<String> tags;
 	
-	private List<Reply> replies;
 	
 	public Tweet() {
 		
@@ -31,16 +31,16 @@ public class Tweet {
 		return tweetMessage;
 	}
 
-	public List<Reply> getReplies() {
-		return replies;
-	}
 
-	public void setReplies(List<Reply> replies) {
-		this.replies = replies;
-	}
 
 	public String getTimeStamp() {
 		return timeStamp;
 	}
+
+
+	public List<String> getTags() {
+		return tags;
+	}
+	
 		
 }

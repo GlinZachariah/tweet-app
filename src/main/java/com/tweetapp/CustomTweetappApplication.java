@@ -1,11 +1,11 @@
-package com.glinzac.tweetapp;
+package com.tweetapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = " com.glinzac.tweetapp")
+@ComponentScan(basePackages = " com.tweetapp")
 public class CustomTweetappApplication {
 
 	public static void main(String[] args) {

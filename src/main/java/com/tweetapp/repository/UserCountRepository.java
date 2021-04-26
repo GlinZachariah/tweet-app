@@ -1,9 +1,9 @@
-package com.glinzac.tweetapp.repository;
+package com.tweetapp.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.glinzac.tweetapp.entities.UserCount;
+import com.tweetapp.entities.UserCount;
 
 @Repository
 public interface UserCountRepository extends MongoRepository<UserCount, Long> {

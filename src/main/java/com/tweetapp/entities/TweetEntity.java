@@ -1,11 +1,11 @@
-package com.glinzac.tweetapp.entities;
+package com.tweetapp.entities;
 
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.glinzac.tweetapp.models.Reply;
+import com.tweetapp.models.Reply;
 
 @Document
 public class TweetEntity {
@@ -19,6 +19,7 @@ public class TweetEntity {
 	
 	private List<Reply> replies;
 	private List<String>userIdLiked;
+	private List<String> tags;
 	
 	public TweetEntity() {
 		
@@ -84,6 +85,15 @@ public class TweetEntity {
 	public void setUserIdLiked(List<String> userIdLiked) {
 		this.userIdLiked = userIdLiked;
 	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+	
 	
 	
 }

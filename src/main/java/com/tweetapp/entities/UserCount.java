@@ -1,4 +1,4 @@
-package com.glinzac.tweetapp.entities;
+package com.tweetapp.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

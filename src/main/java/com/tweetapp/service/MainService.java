@@ -1,4 +1,4 @@
-package com.glinzac.tweetapp.service;
+package com.tweetapp.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,13 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.glinzac.tweetapp.controller.MainController;
-import com.glinzac.tweetapp.entities.UserCount;
-import com.glinzac.tweetapp.entities.UserEntity;
-import com.glinzac.tweetapp.models.LoginForm;
-import com.glinzac.tweetapp.models.RegisterForm;
-import com.glinzac.tweetapp.repository.UserCountRepository;
-import com.glinzac.tweetapp.repository.UserRepository;
+import com.tweetapp.controller.MainController;
+import com.tweetapp.entities.UserCount;
+import com.tweetapp.entities.UserEntity;
+import com.tweetapp.models.LoginForm;
+import com.tweetapp.models.RegisterForm;
+import com.tweetapp.models.Response;
+import com.tweetapp.repository.UserCountRepository;
+import com.tweetapp.repository.UserRepository;
 
 @Service
 public class MainService {
@@ -27,7 +28,7 @@ public class MainService {
 	@Autowired
 	UserCountRepository userCount;
 
-	public ResponseEntity<Object> registerNewUser(RegisterForm registerForm) {
+	public ResponseEntity<Response> registerNewUser(RegisterForm registerForm) {
 		String userId =registerForm.getUserId();
 		LOGGER.info("Registring new userName with userId: {}", userId);
 		
@@ -36,7 +37,8 @@ public class MainService {
 			userCnt =userCount.findById(100L).orElse(new UserCount(100L));
 			boolean userExists = userRepo.existsById(userId);
 			if (userExists) {
-				return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+				Response response = new Response(409L);
+				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
 			Long id = userCnt.getNewUserId();
 			UserEntity newUser = new UserEntity();
@@ -51,25 +53,30 @@ public class MainService {
 			this.userCount.save(userCnt);
 		}catch(Exception e) {
 			LOGGER.error("Error while fetching data :{}",e);
-			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+			Response response = new Response(417L);
+			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
-		return new  ResponseEntity<>(HttpStatus.CREATED);
+		Response response = new Response(201L);
+		return new  ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<Object> loginUser(LoginForm loginForm) {
+	public ResponseEntity<Response> loginUser(LoginForm loginForm) {
 		boolean userExists = userRepo.existsById(loginForm.getUserId());
-		if (userExists) {
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		if (!userExists) {
+			Response response = new Response(409L);
+			return new ResponseEntity<>(response,HttpStatus.OK);
 		}else {
 			UserEntity user =userRepo.findById(loginForm.getUserId()).get();
 			if(user.getPassword().equals(loginForm.getPassword())) {
-				return new ResponseEntity<>(HttpStatus.OK);
+				Response response = new Response(200L);
+				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
 		}
-		return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		Response response = new Response(409L);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
-	public ResponseEntity<Object> resetUser(LoginForm forgotForm) {
+	public ResponseEntity<Response> resetUser(LoginForm forgotForm) {
 		boolean userExists = userRepo.existsById(forgotForm.getUserId());
 		if (userExists) {
 			UserEntity user =userRepo.findById(forgotForm.getUserId()).get();
@@ -78,10 +85,12 @@ public class MainService {
 				userRepo.save(user);
 			} catch(Exception e) {
 				LOGGER.error("Error while fetching data :{}",e);
-				return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+				Response response = new Response(417L);
+				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
 		}
-		return new ResponseEntity<>("Password Reset Success",HttpStatus.OK);
+		Response response = new Response(200L);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
 }

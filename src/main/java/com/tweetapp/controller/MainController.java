@@ -1,4 +1,4 @@
-package com.glinzac.tweetapp.controller;
+package com.tweetapp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.glinzac.tweetapp.models.LoginForm;
-import com.glinzac.tweetapp.models.RegisterForm;
-import com.glinzac.tweetapp.service.MainService;
+import com.tweetapp.models.LoginForm;
+import com.tweetapp.models.RegisterForm;
+import com.tweetapp.models.Response;
+import com.tweetapp.service.MainService;
 
 @RestController
-@RequestMapping(value = "/api/v1.0/tweets")
+@RequestMapping(path = "/api/v1.0/tweets")
 public class MainController {
 	
 
@@ -27,24 +28,24 @@ public class MainController {
 	
 //	POST /api/v1.0/tweets/register Register as new user
 	
-	@PostMapping(value= "/register")
-	public ResponseEntity<Object> regsiterNewUser(@RequestBody RegisterForm registerForm) {
-		ResponseEntity<Object> response =  this.mainService.registerNewUser(registerForm);
+	@PostMapping(path= "/register")
+	public ResponseEntity<Response> regsiterNewUser(@RequestBody RegisterForm registerForm) {
+		ResponseEntity<Response> response =  this.mainService.registerNewUser(registerForm);
 		return response;
 	}
 	
 //	GET /api/v1.0/tweets/login Login
 	
-	@PostMapping(value= "/login")
-	public ResponseEntity<Object> loginUser(@RequestBody LoginForm loginForm) {
-		ResponseEntity<Object> response = this.mainService.loginUser(loginForm);
+	@PostMapping(path= "/login")
+	public ResponseEntity<Response> loginUser(@RequestBody LoginForm loginForm) {
+		ResponseEntity<Response> response = this.mainService.loginUser(loginForm);
 		return response;
 	}
 
 //	GET /api/v1.0/tweets/<username>/forgot Forgot password
-	@PostMapping(value= "/{username}/forgot")
-	public  ResponseEntity<Object> forgotPassword(@PathVariable String username,@RequestBody LoginForm forgotForm) {
-		ResponseEntity<Object> response = this.mainService.resetUser(forgotForm);
+	@PostMapping(path= "/{username}/forgot")
+	public  ResponseEntity<Response> forgotPassword(@PathVariable String username,@RequestBody LoginForm forgotForm) {
+		ResponseEntity<Response> response = this.mainService.resetUser(forgotForm);
 		return response;
 	}
 
