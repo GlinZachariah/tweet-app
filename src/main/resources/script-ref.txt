@@ -1,0 +1,5 @@
+C:\Softwares\Java_Setup\prometheus-2.24.1.windows-amd64\prometheus.exe --config.file="prometheus.yml"
+
+C:\Softwares\Java_Setup\logstash-7.10.2\bin\logstash -f logstash.conf
+
+C:\Softwares\Java_Setup\kibana-7.10.2-windows-x86_64\bin\kibana --config kibana.yml
