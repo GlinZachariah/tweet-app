@@ -1,7 +1,7 @@
 package com.tweetapp.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import com.tweetapp.repository.UserRepository;
 @Service
 public class MainService {
 	
-	private static final Logger LOGGER =LoggerFactory.getLogger(MainService.class);
+	private static final Logger LOGGER =LogManager.getLogger(MainService.class);
 	
 	@Autowired
 	UserRepository userRepo;
@@ -38,6 +38,7 @@ public class MainService {
 			boolean userExists = userRepo.existsById(userId);
 			if (userExists) {
 				Response response = new Response(409L);
+				LOGGER.error("User already exists with userId : {}!!", userId);
 				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
 			Long id = userCnt.getNewUserId();
